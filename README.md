@@ -51,6 +51,6 @@ Python
 # Authors
 Alex John, B. ([@Praetorian_GRD](https://twitter.com/Praetorian_GRD))
 # License
-Copyright (C) 2018 Alex John, B. This project is licensed under the GNU License - see the [LICENSE.md](https://github.com/west-wind/LAR/LICENSE.md) file for details.
+Copyright (C) 2018 Alex John, B. This project is licensed under the GNU License - see the [LICENSE.md](https://raw.githubusercontent.com/west-wind/LAR/master/LICENSE) file for details.
 # Acknowledgements
 [Joe Perry](https://www.cybrary.it/members/perry/) & [Cybrary](https://www.cybrary.it) for the awesome ‘[Python for Security Professionals](https://www.cybrary.it/course/python/)’ course.
