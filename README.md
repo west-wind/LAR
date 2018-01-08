@@ -1,3 +1,4 @@
+
 # Light Armoured Recon
 **Light Armoured Recon** is a python script designed to automate passive reconnaissance. It automates execution of *TheHarvester*, *whois*, *Robtex.com*, *Builtwith.com*, *DNSrecon*, *metagoofil*, & *knockpy*.
 # Installing
@@ -28,11 +29,19 @@ To begin
 
 Enter target URL by selecting option 1.
 
+![Running the script](https://raw.githubusercontent.com/west-wind/LAR/master/Screenshots/SCR%201.png)
+
 Enter output filename by selecting option 2. Make sure that no other file with the same name exists in the same directory, so as to avoid overwriting any existing files.
+
+![Entering target information](https://raw.githubusercontent.com/west-wind/LAR/master/Screenshots/SCR%202.png)
 
 Select option 3 to proceed with recon.
 
+![Entering output filename](https://raw.githubusercontent.com/west-wind/LAR/master/Screenshots/SCR%203.png)
+
 Enter 'EXECUTE' to commence execution of packages.
+
+![Commence recon](https://raw.githubusercontent.com/west-wind/LAR/master/Screenshots/SCR%204.png)
 
 ## Customisation
 You can customise the execution of each package by editing command specific parameters in **LAR. py**
