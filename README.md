@@ -4,11 +4,11 @@
 # Installing
 ## Prerequisites
  - Python 2.7
- - TheHarvester (https://code.google.com/p/theharvester/)
- - whois (https://github.com/rfc1036/whois)
- - DNSrecon (https://github.com/darkoperator/dnsrecon)
- - metagoofil (www.edge-security.com/metagoofil.php)
- - knockpy (https://github.com/guelfoweb/knock)
+ - [TheHarvester](https://code.google.com/p/theharvester/)
+ - [whois](https://github.com/rfc1036/whois)
+ - [DNSrecon](https://github.com/darkoperator/dnsrecon)
+ - [metagoofil](www.edge-security.com/metagoofil.php)
+ - [knockpy](https://github.com/guelfoweb/knock)
 ## Dependencies
  - subprocess
 ## Installation 
