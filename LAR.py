@@ -139,7 +139,7 @@ def dnslookup():
 			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 4 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
-		sys.exit(1)
+		# sys.exit(1)
 	return 0
 
 # METAGOOFIL         =====================================================================================================================================
