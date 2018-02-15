@@ -128,7 +128,7 @@ def dnslookup():
 	try:
 		if(output.returncode != 0):
 			print ('\x1b[1;31m' + '[ERROR]\t' + '\x1b[0m' + 'Step 4 Failed Check/Update prerequisitie packages. \nError: ' + err.rstrip())
-			fileObject.close()
+			#fileObject.close()
 			sys.exit(1)
 		else:
 			#print "Return code: ", output.returncode
