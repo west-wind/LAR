@@ -42,8 +42,9 @@ def acquireTarget():
 
 # THE HARVESTER     =====================================================================================================================================
 def harvester():
-	os.system('clear')
-	print "\n[*]\tRunning TheHarvester\n[*]\tStep 1/6 in progress"
+	with lock:
+		os.system('clear')
+		print "\n[*]\tRunning TheHarvester\n[*]\tStep 1/6 in progress"
 	global target
 	global fileObject
 	cmd = 'theharvester -d ' + target + ' -b all'
@@ -60,14 +61,15 @@ def harvester():
 		    	fileObject.write('\nThe Harvester Output: \n')
 		    	fileObject.write('=========================================================================\n')
 		    	fileObject.write(str(out.rstrip()))
-		    print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 1 Executed\n')
+		    print ('\x1b[1;32m' + '\n[OK]\t' + '\x1b[0m' + 'Step 1 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
 	return 0
 
 # WHOIS             =====================================================================================================================================
 def whois():
-	print "\n[*]\tRunning whois\n[*]\tStep 2/6 in progress"
+	with lock:
+		print "\n[*]\tRunning whois\n[*]\tStep 2/6 in progress"
 	global target
 	global fileObject
 	cmd = 'whois' + ' ' + target
@@ -84,7 +86,7 @@ def whois():
 				fileObject.write('\n\nWhois Output: \n')
 				fileObject.write('=========================================================================\n')
 				fileObject.write(str(out.rstrip()))
-			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 2 Executed\n')
+			print ('\x1b[1;32m' + '\n[OK]\t' + '\x1b[0m' + 'Step 2 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
 		# sys.exit(1)
@@ -93,7 +95,8 @@ def whois():
 # BUILTWITH         =====================================================================================================================================
 def webtechnology():
 	global target, folderName
-	print "\n[*]\tConnecting to Robtex.com & Builtwith.com\n[*]\tStep 3/6 in progress"
+	with lock:
+		print "\n[*]\tConnecting to Robtex.com & Builtwith.com\n[*]\tStep 3/6 in progress"
 	cmmd = 'curl -o Output/' + folderName + '/' + target + '_robtex_scan.html' + ' https://www.robtex.com/dns-lookup/' + target
 	cmd  = 'curl -o Output/' + folderName + '/' + target +'_builtwith_scan.html' + ' https://builtwith.com/' + target
 	outPut = Popen(cmmd, shell=True, stdout=PIPE, stderr=PIPE)
@@ -108,7 +111,7 @@ def webtechnology():
 			#print "Return code: ", output.returncode
 			#print out.rstrip(),err.rstrip()
 			#print result
-			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 3 Executed\n')
+			print ('\x1b[1;32m' + '\n[OK]\t' + '\x1b[0m' + 'Step 3 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
 		# sys.exit(1)
@@ -116,7 +119,8 @@ def webtechnology():
 
 # DNS RECON         =====================================================================================================================================
 def dnslookup():
-	print "\n[*]\tRunning DNSrecon\n[*]\tStep 4/6 in progress"
+	with lock:
+		print "\n[*]\tRunning DNSrecon\n[*]\tStep 4/6 in progress"
 	global target
 	global fileObject
 	cmd = 'dnsrecon -d' + ' ' + target
@@ -133,7 +137,7 @@ def dnslookup():
 				fileObject.write('\nDNS Recon Output: \n')
 				fileObject.write('=========================================================================\n')
 				fileObject.write(str(out.rstrip()))
-			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 4 Executed\n')
+			print ('\x1b[1;32m' + '\n[OK]\t' + '\x1b[0m' + 'Step 4 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
 		# sys.exit(1)
@@ -141,7 +145,8 @@ def dnslookup():
 
 # METAGOOFIL         =====================================================================================================================================
 def metagoofil():
-	print "\n[*]\tRunning metagoofil\n[*]\tStep 5/6 in progress"
+	with lock:
+		print "\n[*]\tRunning metagoofil\n[*]\tStep 5/6 in progress"
 	global target
 	global fileObject
 	cmd = 'metagoofil -d ' + target + ' -t pdf,doc,xls,ppt,odp,ods,docx,xlsx,pptx -l 10 -n 1 -o Output/' + folderName + '/' + 'metagoofil_file_downloads -f Output/' + folderName + '/metagoofil_scan_output.html' 
@@ -158,7 +163,7 @@ def metagoofil():
 				fileObject.write('\nMetagoofil Output: \n')
 				fileObject.write('=========================================================================\n')
 				fileObject.write(str(out.rstrip()))
-			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 5 Executed\n')
+			print ('\x1b[1;32m' + '\n[OK]\t' + '\x1b[0m' + 'Step 5 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
 		# sys.exit(1)
@@ -166,7 +171,8 @@ def metagoofil():
 
 # KNOCKPY           =====================================================================================================================================
 def knockDomain():
-	print "\n[*]\tRunning knockpy. This step can take ~15 mins. to complete.\n[*]\tStep 6/6 in progress"
+	with lock:
+		print "\n[*]\tRunning knockpy. This step can take ~15 mins. to complete.\n[*]\tStep 6/6 in progress"
 	global target
 	global fileObject, GITHUB, fileName, folderName
 	cmd = 'knockpy ' + target 
@@ -184,8 +190,8 @@ def knockDomain():
 				fileObject.write('\nKnockpy Subdomain Scan Output: \n')
 				fileObject.write('=========================================================================\n')
 				fileObject.write(str(out.rstrip()))
-			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Results have been saved to /Output/%s/%s '%(folderName, fileName))
-			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 6 Executed\n' + '\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Mission Over')
+			print ('\x1b[1;32m' + '\n[OK]\t' + '\x1b[0m' + 'Results have been saved to /Output/%s/%s '%(folderName, fileName))
+			print ('\x1b[1;32m' + '\n[OK]\t' + '\x1b[0m' + 'Step 6 Executed\n' + '\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Mission Over')
 			print "\nThank you for using %s" %NAME 
 			print "For suggestions %s" %TWITTER
 			print "To contribute, visit %s\n" %GITHUB
