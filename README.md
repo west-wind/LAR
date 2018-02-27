@@ -18,9 +18,9 @@
     $ cd LAR
     $ ./dependency_installer.sh
     $ python LAR.py
-# Getting Started
+# Intended Use
 Usage of **Light Armoured Recon** for sending any traffic to a target without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developer assume no liability and are not responsible for any misuse or damage caused by this program. 
-
+# Getting Started
 This script requires the user to input the target URL *(excluding www)* by selecting option 1 & the output filename by selecting option 2. Make sure the filename is unique, so as not to overwrite any existing files in the directory.
 
 To begin
