@@ -11,6 +11,7 @@
  - [knockpy](https://github.com/guelfoweb/knock)
 ## Dependencies
  - subprocess
+ - threading
 ## Installation 
 
     $ git clone https://github.com/west-wind/LAR.git
