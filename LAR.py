@@ -17,16 +17,18 @@ try:
 	from subprocess import *
 	import os
 	import sys
-	import subprocess
+	import subprocess, threading
 except ImportError:
 	print "\nImport Error! Update Kali & check for prerequisities in README"
 
 fileObject = ''
 fileName = ''
+folderName = ''
 target = ''
+lock = threading.Lock()
 
 # INFORMATION       =====================================================================================================================================
-NAME		= "Light Armoured Recon Script v1.0"
+NAME		= "Light Armoured Recon Script v1.2"
 AUTHOR		= "Alex John, B."
 TWITTER		= "@Praetorian_GRD"
 GITHUB		= "Github https://github.com/west-wind/LAR"
@@ -41,8 +43,7 @@ def acquireTarget():
 # THE HARVESTER     =====================================================================================================================================
 def harvester():
 	os.system('clear')
-	print "\n[*]\tRunning TheHarvester"
-	print "[*]\tStep 1/6 in progress"
+	print "\n[*]\tRunning TheHarvester\n[*]\tStep 1/6 in progress"
 	global target
 	global fileObject
 	cmd = 'theharvester -d ' + target + ' -b all'
@@ -51,24 +52,22 @@ def harvester():
 		out, err = output.communicate()
 		if(output.returncode != 0):
 			print ('\x1b[1;31m' + '[ERROR]\t' + '\x1b[0m' + 'Step 1 Failed! Check/Update prerequisitie packages. \nError: ' + err.rstrip())
-			#fileObject.close()
 			sys.exit(1)
 		else:
 		    #print "Return code: ", output.returncode
 		    #print out.rstrip(),err.rstrip()
-		    fileObject.write('\nThe Harvester Output: \n')
-		    fileObject.write('=========================================================================\n')
-		    fileObject.write(str(out.rstrip()))
+		    with lock:
+		    	fileObject.write('\nThe Harvester Output: \n')
+		    	fileObject.write('=========================================================================\n')
+		    	fileObject.write(str(out.rstrip()))
 		    print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 1 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
-		sys.exit(1)
 	return 0
 
 # WHOIS             =====================================================================================================================================
 def whois():
-	print "\n[*]\tRunning whois"
-	print "[*]\tStep 2/6 in progress"
+	print "\n[*]\tRunning whois\n[*]\tStep 2/6 in progress"
 	global target
 	global fileObject
 	cmd = 'whois' + ' ' + target
@@ -77,26 +76,26 @@ def whois():
 		out, err = output.communicate()
 		if(output.returncode != 0):
 			print ('\x1b[1;31m' + '[ERROR]\t' + '\x1b[0m' + 'Step 2 Failed! Check/Update prerequisitie packages. \nError: ' + err.rstrip())
-			fileObject.close()
 			sys.exit(1)
 		else:
 			#print "Return code: ", output.returncode
 			#print out.rstrip(),err.rstrip()
-			fileObject.write('\n\nWhois Output: \n')
-			fileObject.write('=========================================================================\n')
-			fileObject.write(str(out.rstrip()))
+			with lock:
+				fileObject.write('\n\nWhois Output: \n')
+				fileObject.write('=========================================================================\n')
+				fileObject.write(str(out.rstrip()))
 			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 2 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
-		sys.exit(1)
+		# sys.exit(1)
 	return 0
 
 # BUILTWITH         =====================================================================================================================================
 def webtechnology():
-	print "\n[*]\tConnecting to Robtex.com & Builtwith.com"
-	print "[*]\tStep 3/6 in progress"
-	cmmd = 'curl -o ' + target + '_robtex_scan.html' + ' https://www.robtex.com/dns-lookup/' + target
-	cmd = 'curl -o ' + target +'_builtwith_scan.html' + ' https://builtwith.com/' + target
+	global target, folderName
+	print "\n[*]\tConnecting to Robtex.com & Builtwith.com\n[*]\tStep 3/6 in progress"
+	cmmd = 'curl -o Output/' + folderName + '/' + target + '_robtex_scan.html' + ' https://www.robtex.com/dns-lookup/' + target
+	cmd  = 'curl -o Output/' + folderName + '/' + target +'_builtwith_scan.html' + ' https://builtwith.com/' + target
 	outPut = Popen(cmmd, shell=True, stdout=PIPE, stderr=PIPE)
 	output = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 	out, err = output.communicate()
@@ -104,7 +103,6 @@ def webtechnology():
 	try:
 		if(output.returncode != 0):
 			print ('\x1b[1;31m' + '[ERROR]\t' + '\x1b[0m' + 'Step 3 Failed! Check/Update prerequisitie packages. \nError: ' + err.rstrip())
-			fileObject.close()
 			sys.exit(1)
 		else:
 			#print "Return code: ", output.returncode
@@ -113,13 +111,12 @@ def webtechnology():
 			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 3 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
-		sys.exit(1)
+		# sys.exit(1)
 	return 0
 
 # DNS RECON         =====================================================================================================================================
 def dnslookup():
-	print "\n[*]\tRunning DNSrecon"
-	print "[*]\tStep 4/6 in progress"
+	print "\n[*]\tRunning DNSrecon\n[*]\tStep 4/6 in progress"
 	global target
 	global fileObject
 	cmd = 'dnsrecon -d' + ' ' + target
@@ -128,14 +125,14 @@ def dnslookup():
 	try:
 		if(output.returncode != 0):
 			print ('\x1b[1;31m' + '[ERROR]\t' + '\x1b[0m' + 'Step 4 Failed Check/Update prerequisitie packages. \nError: ' + err.rstrip())
-			#fileObject.close()
 			sys.exit(1)
 		else:
 			#print "Return code: ", output.returncode
 			#print out.rstrip(),err.rstrip()
-			fileObject.write('\nDNS Recon Output: \n')
-			fileObject.write('=========================================================================\n')
-			fileObject.write(str(out.rstrip()))
+			with lock:
+				fileObject.write('\nDNS Recon Output: \n')
+				fileObject.write('=========================================================================\n')
+				fileObject.write(str(out.rstrip()))
 			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 4 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
@@ -144,36 +141,34 @@ def dnslookup():
 
 # METAGOOFIL         =====================================================================================================================================
 def metagoofil():
-	print "\n[*]\tRunning metagoofil"
-	print "[*]\tStep 5/6 in progress"
+	print "\n[*]\tRunning metagoofil\n[*]\tStep 5/6 in progress"
 	global target
 	global fileObject
-	cmd = 'metagoofil -d ' + target + ' -t pdf,doc,xls,ppt,odp,ods,docx,xlsx,pptx -l 10 -n 1 -o metagoofil_downloads -f metagoofil_output.html' 
+	cmd = 'metagoofil -d ' + target + ' -t pdf,doc,xls,ppt,odp,ods,docx,xlsx,pptx -l 10 -n 1 -o Output/' + folderName + '/' + 'metagoofil_file_downloads -f Output/' + folderName + '/metagoofil_scan_output.html' 
 	output = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 	out, err = output.communicate()
 	try:
 		if(output.returncode != 0):
 			print ('\x1b[1;31m' + '[ERROR]\t' + '\x1b[0m' + 'Step 5 Failed! Check/Update prerequisitie packages. \nError: ' + err.rstrip())
-			fileObject.close()
 			sys.exit(1)
 		else:
 			#print "Return code: ", output.returncode
 			#print out.rstrip(),err.rstrip()
-			fileObject.write('\nMetagoofil Output: \n')
-			fileObject.write('=========================================================================\n')
-			fileObject.write(str(out.rstrip()))
+			with lock:
+				fileObject.write('\nMetagoofil Output: \n')
+				fileObject.write('=========================================================================\n')
+				fileObject.write(str(out.rstrip()))
 			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 5 Executed\n')
 	except:
 		print "Something went wrong! Check prerequisities.\n"
-		sys.exit(1)
+		# sys.exit(1)
 	return 0
 
 # KNOCKPY           =====================================================================================================================================
 def knockDomain():
-	print "\n[*]\tRunning knockpy. This step can take ~15 mins. to complete."
-	print "[*]\tStep 6/6 in progress"
+	print "\n[*]\tRunning knockpy. This step can take ~15 mins. to complete.\n[*]\tStep 6/6 in progress"
 	global target
-	global fileObject, GITHUB, fileName
+	global fileObject, GITHUB, fileName, folderName
 	cmd = 'knockpy ' + target 
 	output = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 	out, err = output.communicate()
@@ -185,15 +180,15 @@ def knockDomain():
 		else:
 			#print "Return code: ", output.returncode
 			#print out.rstrip(),err.rstrip()
-			fileObject.write('\nKnockpy Subdomain Scan Output: \n')
-			fileObject.write('=========================================================================\n')
-			fileObject.write(str(out.rstrip()))
-			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Results have been saved to %s '%fileName)
+			with lock:
+				fileObject.write('\nKnockpy Subdomain Scan Output: \n')
+				fileObject.write('=========================================================================\n')
+				fileObject.write(str(out.rstrip()))
+			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Results have been saved to /Output/%s/%s '%(folderName, fileName))
 			print ('\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Step 6 Executed\n' + '\x1b[1;32m' + '[OK]\t' + '\x1b[0m' + 'Mission Over')
 			print "\nThank you for using %s" %NAME 
 			print "For suggestions %s" %TWITTER
 			print "To contribute, visit %s\n" %GITHUB
-			fileObject.close()
 	except:
 		print "Something went wrong! Check prerequisities.\n"
 		sys.exit(1)
@@ -222,11 +217,11 @@ def info():
 def main():
 	global fileObject
 	global target
-	global fileName
+	global fileName, folderName
 	print "------------------------------------------------------------"
 	print ('\x1b[1;31m' + '\n\t\t\   LIGHT ARMOURED RECON   /' + '\x1b[0m')
 	print ('\x1b[1;31m' + '\t\t \    TIP OF THE SPEAR    /' + '\x1b[0m')
-	print ('\x1b[1;34m' + '\nLight Armoured Recon Script' + '\x1b[0m')
+	print ('\x1b[1;34m' + '\nLight Armoured Recon v1.2' + '\x1b[0m')
 	print ('\x1b[1;34m' + 'Alex John, B.' + '\x1b[0m')
 	print ('\x1b[1;34m' + '@Praetorian_GRD' + '\x1b[0m')
 	print "------------------------------------------------------------"
@@ -260,24 +255,45 @@ def main():
 					authorisation = str(raw_input("\nWaiting for input: "))
 					if(authorisation == 'EXECUTE' or authorisation == 'execute'):
 						print "\nCommencing Recon . ...."
-						harvester()
-						whois()
-						webtechnology()
-						dnslookup()
-						metagoofil()
-						knockDomain()
+						t1 = threading.Thread(target = harvester)
+						t2 = threading.Thread(target = whois)
+						t3 = threading.Thread(target = webtechnology)
+						t4 = threading.Thread(target = dnslookup)
+						t5 = threading.Thread(target = metagoofil)
+						t6 = threading.Thread(target = knockDomain)
+						t1.start()
+						t2.start()
+						t3.start()
+						t4.start()
+						t5.start()
+						t6.start()
+						t1.join()
+						t2.join()
+						t3.join()
+						t4.join()
+						t5.join()
+						t6.join()
+						while threading.activeCount() > 1:
+							pass
+						else:
+							fileObject.close()
 						os._exit(0)
 					else:
+						fileObject.close()
 						print "\nThank you for using %s" %NAME 
 						print "For suggestions %s" %TWITTER
 						print "To contribute, visit %s\n" %GITHUB
 						sys.exit(0)
 			elif(option == 2):
 				os.system('clear')
-				fileName = str(raw_input("Enter output filename: "))
-				fileName += '.txt'
-				fileObject = open(fileName,"w+")
-				print "[OK]\t%s created." %(fileName)
+				folderName = str(raw_input("Enter output filename: "))
+				fileName = folderName + '.txt'
+				if not os.path.exists("Output"):
+					os.makedirs("Output")
+				if not os.path.exists("Output/"+folderName):
+					os.makedirs("Output/"+folderName+"/")
+				fileObject = open("Output/"+folderName+"/"+fileName, 'w+')
+				print "[OK]\t/Output/%s/%s created." %(folderName, fileName)
 			elif(option == 4):
 				os.system('clear')
 				info()
@@ -286,4 +302,6 @@ def main():
 				print ('\x1b[1;31m' + '\nInvalid option!\n' + '\x1b[0m')
 	except KeyboardInterrupt:
 		sys.exit(0)
-main()
+
+if __name__ == '__main__':
+	main()
