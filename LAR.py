@@ -17,7 +17,8 @@ try:
 	from subprocess import *
 	import os
 	import sys
-	import subprocess, threading
+	import subprocess
+	import threading
 except ImportError:
 	print "\nImport Error! Update Kali & check for prerequisities in README"
 
